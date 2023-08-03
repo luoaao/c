@@ -1,0 +1,719 @@
+MAN(1)               手册分页显示工具               MAN(1)
+
+名名称称
+       man - an interface to the system reference manuals
+
+概概述述
+       mmaann [_m_a_n _o_p_t_i_o_n_s] [[_s_e_c_t_i_o_n] _p_a_g_e ...] ...
+       mmaann --kk [_a_p_r_o_p_o_s _o_p_t_i_o_n_s] _r_e_g_e_x_p ...
+       mmaann --KK [_m_a_n _o_p_t_i_o_n_s] [_s_e_c_t_i_o_n] _t_e_r_m ...
+       mmaann --ff [_w_h_a_t_i_s _选_项] _页 ...
+       mmaann --ll [_m_a_n _o_p_t_i_o_n_s] _f_i_l_e ...
+       mmaann --ww|--WW [_m_a_n _o_p_t_i_o_n_s] _p_a_g_e ...
+
+描描述述
+       mmaann  is  the  system's  manual  pager.   Each  _p_a_g_e
+       argument given to mmaann is normally  the  name  of  a
+       program,  utility  or  function.   The  _m_a_n_u_a_l _p_a_g_e
+       associated with each of  these  arguments  is  then
+       found  and displayed.  A _s_e_c_t_i_o_n, if provided, will
+       direct mmaann to look only  in  that  _s_e_c_t_i_o_n  of  the
+       manual.   The default action is to search in all of
+       the  available  _s_e_c_t_i_o_n_s  following  a  pre-defined
+       order  (see  DDEEFFAAUULLTTSS),  and to show only the first
+       _p_a_g_e  found,  even  if  _p_a_g_e  exists   in   several
+       _s_e_c_t_i_o_n_s.
+
+       下表显示了手册的 _章_节 号及其包含的手册页类型。
+
+       1   可执行程序或 shell 命令
+       2   系统调用(内核提供的函数)
+       3   库调用(程序库中的函数)
+       4   特殊文件(通常位于 _/_d_e_v)
+       5   File formats and conventions, e.g. _/_e_t_c_/_p_a_s_s_w_d
+       6   游戏
+       7   杂项(包括宏包和规范，如 mmaann(7)，ggrrooffff(7))
+       8   系统管理命令(通常只针对 root 用户)
+       9   内核例程 [非标准
+
+       一个手册 _页_面 包含若干个小节。
+
+       小节名称通常包括     NNAAMMEE,    概概述述((SSYYNNOOPPSSIISS)),    配配
+       置置((CCOONNFFIIGGUURRAATTIIOONN)),      描描述述((DDEESSCCRRIIPPTTIIOONN)),       选选
+       项项((OOPPTTIIOONNSS)),       退退出出状状态态((EEXXIITT SSTTAATTUUSS)),      返返回回
+       值值((RREETTUURRNN VVAALLUUEE)), 错错误误((EERRRROORRSS)),  环环境境((EENNVVIIRROONNMMEENNTT)),
+       文文件件((FFIILLEESS)),         版版本本((VVEERRSSIIOONNSS)),         符符合合标标
+       准准((CCOONNFFOORRMMIINNGG TTOO)),   注注((NNOOTTEESS)),   缺缺陷陷((BBUUGGSS)),    示示
+       例例((EEXXAAMMPPLLEE)), 作作者者((AAUUTTHHOORRSS)), 和 亦亦见见((SSEEEE AALLSSOO)).
+
+       以下规范适用于  概概述述((SSYYNNOOPPSSIISS)) 小节，也可作为其他小
+       节的指南。
+
+       加加粗粗文文本本       按原样显示。
+       _倾_斜_文_本       用相应的参数进行替换。
+       [--aabbcc]         “[ ]” 内的任意/全部参数都是可选的。
+       --aa|--bb          以“|”分隔的选项可以一起使用。
+       _参_数 ...       _参_数 可以重复。
+       [_表_达_式] ...   “[ ]”内的整个 _表_达_式 可以重复。
+
+       实际渲染的效果可能因输出设备而异。例如，在终端中
+       man  程序通常无法渲染出斜体，这时一般会以下划线或彩
+       色文字代替。
+
+       程序和函数说明应该是一个可以匹配所有可能用法的模
+       式(pattern)。有些情况下，建议按此手册页          概概
+       述述((SSYYNNOOPPSSIISS)) 小节所显示的分别陈述几种互斥的用法。
+
+示示例例
+       mmaann _l_s
+           显示 _项_目 (程序)  _l_s 对应的手册页
+
+       mmaann _m_a_n._7
+           Display the manual page for macro  package  _m_a_n
+           from   section  _7.   (This  is  an  alternative
+           spelling of "mmaann _7 _m_a_n".)
+
+       mmaann ''_m_a_n(_7)'
+           Display the manual page for macro  package  _m_a_n
+           from  section  _7.  (This is another alternative
+           spelling of  "mmaann  _7  _m_a_n".   It  may  be  more
+           convenient    when    copying    and    pasting
+           cross-references to manual  pages.   Note  that
+           the  parentheses  must  normally  be  quoted to
+           protect them from the shell.)
+
+       mmaann --aa _i_n_t_r_o
+           正确执行时显示手册中包含的所有可用的 _i_n_t_r_o 手册
+           页。可以在连续显示过程中退出或跳过任一页。
+
+       mmaann --tt _b_a_s_h | _l_p_r _-_P_p_s
+           Format  the  manual  page  for  _b_a_s_h  into  the
+           default ttrrooffff or ggrrooffff format and  pipe  it  to
+           the  printer  named _p_s.  The default output for
+           ggrrooffff is usually PostScript.  mmaann ----hheellpp should
+           advise as to which processor is bound to the --tt
+           option.
+
+       mmaann --ll --TT_d_v_i _._/_f_o_o_._1_x_._g_z >> _._/_f_o_o_._1_x_._d_v_i
+           This command will  decompress  and  format  the
+           nroff  source  manual  page  _._/_f_o_o_._1_x_._g_z into a
+           ddeevviiccee iinnddeeppeennddeenntt ((ddvvii)) file.  The redirection
+           is necessary as the --TT flag causes output to be
+           directed to ssttddoouutt with no pager.   The  output
+           could  be viewed with a program such as xxddvvii or
+           further  processed  into  PostScript  using   a
+           program such as ddvviippss.
+
+       mmaann --kk _p_r_i_n_t_f
+           将关键词  _p_r_i_n_t_f 作为正则表达式来搜索对应的手册
+           页概述和手册页名称，并打印所有匹配结果。等效于
+           aapprrooppooss _p_r_i_n_t_f..
+
+       mmaann --ff _s_m_a_i_l
+           查找 _s_m_a_i_l 引用的手册页并输出找到的所有概述。等
+           效于 wwhhaattiiss _s_m_a_i_l..
+
+概概述述
+       mmaann      有许多选项供用户灵活使用。搜索路径、章节顺
+       序、输出处理器和其他行为和操作均可更改，具体如下。
+
+       If   set,   various   environment   variables   are
+       interrogated to determine the operation of mmaann.  It
+       is possible to set the "catch-all" variable $MMAANNOOPPTT
+       to any string in  command  line  format,  with  the
+       exception  that  any  spaces  used  as  part  of an
+       option's argument must be escaped  (preceded  by  a
+       backslash).    mmaann  will  parse  $MMAANNOOPPTT  prior  to
+       parsing  its  own  command  line.   Those   options
+       requiring  an  argument  will  be overridden by the
+       same options found on the command line.   To  reset
+       all  of  the  options  set  in  $MMAANNOOPPTT,  --DD can be
+       specified as the initial command line option.  This
+       will  allow  man  to  "forget"  about  the  options
+       specified in $MMAANNOOPPTT, although they must still have
+       been valid.
+
+       Manual   pages  are  normally  stored  in  nnrrooffff(1)
+       format under a directory  such  as  _/_u_s_r_/_s_h_a_r_e_/_m_a_n.
+       In   some   installations,   there   may   also  be
+       preformatted _c_a_t _p_a_g_e_s to improve performance.  See
+       mmaannppaatthh(5)   for  details  of where these files are
+       stored.
+
+       This package  supports  manual  pages  in  multiple
+       languages,  controlled  by  your  _l_o_c_a_l_e.   If your
+       system did not set this up for  you  automatically,
+       then  you  may  need to set $LLCC__MMEESSSSAAGGEESS, $LLAANNGG, or
+       another system-dependent  environment  variable  to
+       indicate  your  preferred locale, usually specified
+       in the PPOOSSIIXX format:
+
+       <_语_言>[__<_地_区>[..<_字_符_集>[,,<_版_本>]]]
+
+       如果所需的页面有您的 _区_域  对应的版本，它会替代标准
+       的(通常为美国英语)手册页显示。
+
+       If  you  find  that  the translations supplied with
+       this package  are  not  available  in  your  native
+       language  and you would like to supply them, please
+       contact the maintainer  who  will  be  coordinating
+       such activity.
+
+       Individual  manual  pages  are normally written and
+       maintained  by  the  maintainers  of  the  program,
+       function,  or  other  topic that they document, and
+       are not included with this package.   If  you  find
+       that a manual page is missing or inadequate, please
+       report that to the maintainers of  the  package  in
+       question.
+
+       有关此手册分页程序其他可用功能和扩展的信息，请阅读
+       此包提供的文档。
+
+默默认认值值
+       The order of sections to search may  be  overridden
+       by  the  environment  variable  $MMAANNSSEECCTT  or by the
+       SSEECCTTIIOONN  directive  in   _/_e_t_c_/_m_a_n_p_a_t_h_._c_o_n_f_i_g.    By
+       default it is as follows:
+
+              1 n l 8 3 2 3posix 3pm 3perl 3am 5 4 9 6 7
+
+       The  formatted  manual  page  is  displayed using a
+       _p_a_g_e_r.  This can be specified in a number of  ways,
+       or  else will fall back to a default (see option --PP
+       for details).
+
+       可以通过几种方式指定过滤程序。首先，会查询命令行选
+       项 --pp 或环境变量 $MMAANNRROOFFFFSSEEQQ。如果没有指定 --pp，环境
+       变量也未设置，将解析 nroff 的第一行来查找预处理器字
+       符串。要包含有效的预处理器字符串，第一行必须这样
+       写：
+
+       ''\\"" <字字符符串串>
+
+       其中 字字符符串串 可以是下面 --pp  选项所描述的任何字符的组
+       合。
+
+       如果以上方法都没有提供过滤程序信息，将使用默认程序
+       集。
+
+       过滤程序和主格式化程序(nnrrooffff 或 [ttgg]rrooffff --tt) 将组成
+       格式化流水线并执行。或者，如果 man 树根节点有可执行
+       的 _m_a_n_d_b___n_f_m_t (或 _m_a_n_d_b___t_f_m_t  --tt)  程序，将转而执行
+       它。手册源文件、预处理字符串，以及可选的以 --TT 或 --EE
+       指定的设备将作为参数传递给它。
+
+选选项项
+       Non-argument options that are duplicated either  on
+       the  command  line,  in  $MMAANNOOPPTT,  or both, are not
+       harmful.  For options  that  require  an  argument,
+       each   duplication   will   override  the  previous
+       argument value.
+
+   常常规规选选项项
+       --CC _文_件, ----ccoonnffiigg--ffiillee==_文_件
+              使用此用户配置文件代替默认的 _~_/_._m_a_n_p_a_t_h。
+
+       --dd, ----ddeebbuugg
+              打印调试信息。
+
+       --DD, ----ddeeffaauulltt
+              此选项通常作为第一个选项，它将 mmaann  的行为恢
+              复为默认值。它的作用是重置任何在  $MMAANNOOPPTT 中
+              设置的选项。--DD    之后的任何选项保留其原有效
+              果。
+
+       ----wwaarrnniinnggss[=_警_告]
+              启用来自  _g_r_o_f_f 的警告。这可以用于检查手册页
+              源文件完整性。_警_告  是以英文逗号分隔的警告名
+              列表；如果不提供，默认为“mac”。请查阅   iinnffoo
+              ggrrooffff 中的 “警告” 节点了解可用的警告名列表。
+
+   主主要要操操作作方方式式
+       --ff, ----wwhhaattiiss
+              等同于 wwhhaattiiss。显示来自手册页的加简短说明(若
+              有)。详见 wwhhaattiiss(1)。
+
+       --kk, ----aapprrooppooss
+              等同于 aapprrooppooss。搜索关键词对应的手册概述并显
+              示所有匹配结果。详见 aapprrooppooss。
+
+       --KK, ----gglloobbaall--aapprrooppooss
+              在所有手册中搜索文本。这是蛮力搜索，需要花费
+              一定时间；如果可以，您应该指定手册章节以减少
+              需要搜索的手册页数量。搜索条目可以是简单的字
+              符串(默认)，或正则表达式(若使用了 ----rreeggeexx 选
+              项)。
+
+              注意，这种做法应用于搜索手册页的  _资_源，而非
+              渲染后的文本，所以可能会包含一些不相干的内容
+              （如源文件中的注释）。若要搜索渲染后的文
+              本，速度会比较慢。
+
+       --ll, ----llooccaall--ffiillee
+              Activate  "local"  mode.  Format and display
+              local  manual  files  instead  of  searching
+              through   the  system's  manual  collection.
+              Each   manual   page   argument   will    be
+              interpreted  as  an nroff source file in the
+              correct format.  No cat  file  is  produced.
+              If  '-'  is  listed as one of the arguments,
+              input will be taken from stdin.   When  this
+              option  is  not  used, and man fails to find
+              the page  required,  before  displaying  the
+              error message, it attempts to act as if this
+              option was supplied, using  the  name  as  a
+              filename and looking for an exact match.
+
+       --ww, ----wwhheerree, ----ppaatthh, ----llooccaattiioonn
+              Don't  actually display the manual page, but
+              do print the location of  the  source  nroff
+              file  that  would  be  formatted.  If the --aa
+              option  is  also  used,   then   print   the
+              locations of all source files that match the
+              search criteria.
+
+       --WW, ----wwhheerree--ccaatt, ----llooccaattiioonn--ccaatt
+              Don't actually display the manual page,  but
+              do  print  the  location of the preformatted
+              cat file that would be displayed.  If the --aa
+              option   is   also   used,  then  print  the
+              locations of all preformatted cat files that
+              match the search criteria.
+
+              If  --ww and --WW are both used, then print both
+              source file and  cat  file  separated  by  a
+              space.   If  all of --ww, --WW, and --aa are used,
+              then do this for each possible match.
+
+       --cc, ----ccaattmmaann
+              此选项一般不使用，并且只应由  ccaattmmaann  程序使
+              用。
+
+       --RR _编_码, ----rreeccooddee=_编_码
+              与正常的格式化手册页不同，将输入源转换成指定
+              的 _编_码 输出。如果您已经知道源文件的编码，也
+              可以直接使用  mmaannccoonnvv(1)。不过，此选项可以将
+              几个手册页转换为单一编码，而不用明确声明各自
+              的编码，前提是它们已经安装在与手册页层次结构
+              类似的目录结构中。
+
+              Consider using  mmaann--rreeccooddee(1)   instead  for
+              converting  multiple  manual pages, since it
+              has   an   interface   designed   for   bulk
+              conversion and so can be much faster.
+
+   查查找找手手册册页页
+       --LL _区_域, ----llooccaallee==_区_域
+              mmaann  通常会通过调用  C 语言函数 sseettllooccaallee(3)
+              来确定您的当前区域设置。该函数会查询多个环境
+              变量，可能包括 $LLCC__MMEESSSSAAGGEESS 和 $LLAANNGG。要临时
+              覆盖检测到的值，请使用该选项直接向 mmaann  提供
+              一个 _区_域 字符串。注意，在搜索页面实际开始前
+              它不会生效。帮助消息等输出将始终以检测到的区
+              域语言显示。
+
+       --mm _系_统[,...], ----ssyysstteemmss==_系_统[,...]
+              如果此系统可以访问其他操作系统的手册页，可以
+              使用此选项访问它们。如要在 NewOS  的手册页集
+              中搜索某个手册页，使用 --mm NNeewwOOSS 选项。
+
+              指定的 _系_统 选项可以是逗号分隔的操作系统名称
+              组合。要在搜索中包括本地操作系统的手册页，可
+              以在参数字符串中包含系统名 mmaann。此选项会覆盖
+              $SSYYSSTTEEMM 环境变量。
+
+       --MM _路_径, ----mmaannppaatthh==_路_径
+              指定要使用的另一  manpath   路径。默认情况下
+              mmaann   使用   mmaannppaatthh  得到的代码来确定搜索路
+              径。此选项会覆盖 $SSYYSSTTEEMM 环境变量。
+
+              指定为 manpath  的路径必须是划分为若干章节的
+              手册页层次结构的根目录。章节描述见 man-db 手
+              册(位于“手册页系统”)。要查看层次结构之外的手
+              册页，请参阅 --ll 选项。
+
+       --SS _l_i_s_t, --ss _l_i_s_t, ----sseeccttiioonnss==_l_i_s_t
+              The    given    _l_i_s_t    is   a   colon-   or
+              comma-separated list of  sections,  used  to
+              determine  which  manual  sections to search
+              and in what order.   This  option  overrides
+              the  $MMAANNSSEECCTT environment variable.  (The --ss
+              spelling is for  compatibility  with  System
+              V.)
+
+       --ee _s_u_b_-_e_x_t_e_n_s_i_o_n, ----eexxtteennssiioonn==_s_u_b_-_e_x_t_e_n_s_i_o_n
+              Some  systems  incorporate large packages of
+              manual pages, such as those  that  accompany
+              the  TTccll  package, into the main manual page
+              hierarchy.  To get  around  the  problem  of
+              having  two  manual pages with the same name
+              such as eexxiitt(3), the TTccll pages were  usually
+              all  assigned  to  section  ll.   As  this is
+              unfortunate, it is now possible to  put  the
+              pages  in the correct section, and to assign
+              a specific  "extension"  to  them,  in  this
+              case,  eexxiitt(3tcl).   Under normal operation,
+              mmaann will display eexxiitt(3)  in  preference  to
+              eexxiitt(3tcl).  To negotiate this situation and
+              to avoid having to know  which  section  the
+              page  you  require  resides  in,  it  is now
+              possible to give mmaann a _s_u_b_-_e_x_t_e_n_s_i_o_n  string
+              indicating   which  package  the  page  must
+              belong  to.   Using   the   above   example,
+              supplying  the  option  --ee ttccll  to  mmaann will
+              restrict  the  search  to  pages  having  an
+              extension of **ttccll.
+
+       --ii, ----iiggnnoorree--ccaassee
+              搜索手册页时忽略大小写。此为默认值。
+
+       --II, ----mmaattcchh--ccaassee
+              搜索手册页时匹配大小写。
+
+       ----rreeggeexx
+              显示名字或描述的任何部分与所提供的正则表达式
+              _页 参数匹配的所有页面，像使用 aapprrooppooss(1)  一
+              样。由于搜索正则表达式时通常没办法选出“最
+              佳”手册页，此选项隐含了 --aa 选项。
+
+       ----wwiillddccaarrdd
+              显示名字或描述的任何部分与所提供的 shell  格
+              式通配符    _页    参数匹配的所有页面，像使用
+              aapprrooppooss(1) ----wwiillddccaarrdd 一样。_页  参数必须匹配
+              整个名字或描述，或匹配描述中单词的边界。由于
+              搜索通配符时通常没办法选出“最佳”手册页，此选
+              项隐含了 --aa 选项。
+
+       ----nnaammeess--oonnllyy
+              如果使用了  ----rreeggeexx 或 ----wwiillddccaarrdd 选项，则只
+              匹配手册页名而不匹配描述，就像使用 wwhhaattiiss(1)
+              一样。否则不起作用。
+
+       --aa, ----aallll
+              默认情况下，mmaann 在显示它找到的最符合的手册页
+              后会退出。此选项强制 mmaann  显示名字匹配搜索条
+              件的所有的手册页。
+
+       --uu, ----uuppddaattee
+              This   option   causes  mmaann  to  update  its
+              database caches of installed  manual  pages.
+              This  is only needed in rare situations, and
+              it  is  normally  better  to  run   mmaannddbb(8)
+              instead.
+
+       ----nnoo--ssuubbppaaggeess
+              默认情况下，mmaann 会试图将命令行上提供的一对手
+              册页名视同包含连字符或下划线的单个手册页名来
+              解释。这会支持那些实现了多个子命令的程序的常
+              见模式，允许程序为每个子命令提供手册页，并用
+              和调用各子命令的语法类似的方式访问它们。例
+              如：
+
+                $ man -aw git diff
+                /usr/share/man/man1/git-diff.1.gz
+
+              要禁用此行为，请使用 ----nnoo--ssuubbppaaggeess 选项。
+
+                $ man -aw --no-subpages git diff
+                /usr/share/man/man1/git.1.gz
+                /usr/share/man/man3/Git.3pm.gz
+                /usr/share/man/man1/diff.1.gz
+
+   控控制制格格式式化化输输出出
+       --PP _分_页_程_序, ----ppaaggeerr==_分_页_程_序
+              指定使用哪个输出分页程序。mmaann       默认使用
+              ppaaggeerr，在无法找到 ppaaggeerr 或它不是可执行文件时
+              则会回退到使用  ccaatt。此选项会覆盖  $MMAANNPPAAGGEERR
+              环境变量，进一步覆盖 $PPAAGGEERR 环境变量。它不和
+              --ff 或 --kk 合用。
+
+              值可以是简单的命令名或带参数的命令，并可以使
+              用  shell 引用(反斜杠、单引号或双引号)。不能
+              使用管道连接多个命令；如果您需要，请使用封装
+              器脚本，它能够以参数形式或从标准输入获得要显
+              示的文件。
+
+       --rr _提_示, ----pprroommpptt==_提_示
+              如果使用较新的 lleessss 作为分页程序，mmaann 将尝试
+              设置它的提示消息和一些敏感选项。默认的提示消
+              息类似于
+
+               MMaannuuaall ppaaggee _n_a_m_e((_s_e_c)) lliinnee _x
+
+              其中 _n_a_m_e 表示手册页名，_s_e_c 表示找到的手册页
+              所属的章节，_x 是当前行号。这是通过使用 $LLEESSSS
+              环境变量实现的。
+
+              Supplying --rr with  a  string  will  override
+              this  default.   The  string may contain the
+              text $$MMAANN__PPNN which will be expanded  to  the
+              name  of  the  current  manual  page and its
+              section name surrounded by "(" and ")".  The
+              string  used to produce the default could be
+              expressed as
+
+              \\ MMaannuuaall\\ ppaaggee\\ \\$$MMAANN__PPNN\\ ??llttlliinnee\\ %%lltt??LL//%%LL..::
+              bbyyttee\\ %%bbBB??ss//%%ss....??\\ ((EENNDD))::??ppBB\\ %%ppBB\\\\%%....
+              ((pprreessss hh ffoorr hheellpp oorr qq ttoo qquuiitt))
+
+              为了方便阅读，这里分成了三行。字符串的含义请
+              参阅   lleessss(1)    手册页。提示字符串将首先由
+              shell 解释。提示中的所有的双引号、反斜杠都必
+              须在前面加一个反斜杠转义。提示字符串可以转义
+              的 $ 结束，后面还可以跟其他的 less 选项。mmaann
+              默认设置 --iixx88 选项。
+
+              下面描述的 $MMAANNLLEESSSS 环境变量可以用来在命令行
+              未指定时设置默认的提示字符串。
+
+       --77, ----aasscciiii
+              当在7位编码的终端或终端模拟器中查看纯
+              _a_s_c_i_i(7)    手册页时，若使用    GGNNUU    nnrrooffff
+              _l_a_t_i_n_1(7)     设备描述，一些字符可能显示不正
+              确。此选项允许纯 _a_s_c_i_i 手册页使用 _l_a_t_i_n_1_1 设
+              备以  _a_s_c_i_i  显示。它不会转换任何  _l_a_t_i_n_1 文
+              本。以下表格显示了进行的转换：其中一部分可能
+              只有在使用 GGNNUU nnrrooffff 的 _l_a_t_i_n_1(7) 设备时才正
+              确显示。
+
+              描述         八进制   latin1   ascii
+              ─────────────────────────────────────
+              连字符        255       ‐        -
+              点(中间点)    267       •        o
+              重音符号      264       ´        '
+              乘号          327       ×        x
+
+              如果   _l_a_t_i_n_1   列显示正确，您的终端可能作了
+              _l_a_t_i_n_1 字符设置，此选项将不需要。如果 _l_a_t_i_n_1
+              和 _a_s_c_i_i  列一样，那么您正在使用此选项阅读本
+              手册页，或  mmaann 未使用 _l_a_t_i_n_1 设备描述来格式
+              化此页。如果 _l_a_t_i_n_1 列缺损，您可能要使用此选
+              项来查看手册页。
+
+              在使用  --tt, --HH, --TT, 或 --ZZ 选项时此选项可能对
+              GGNNUU 版版 之外的 nnrrooffff 程序无用。
+
+       --EE _编_码, ----eennccooddiinngg=_编_码
+              生成对应字符编码的输出，而非默认编码。为向后
+              兼容，_编_码     可以是     nnrrooffff     设备，如
+              aasscciiii、llaattiinn11 或  uuttff88，也可以是实际的字符编
+              码如 UUTTFF--88。
+
+       ----nnoo--hhyypphheennaattiioonn, ----nnhh
+              通常，如果需要将单词排在一行而不添加过多的空
+              格， nnrrooffff 会在换行处自动断字(给文本添加连字
+              符，即使单词本来不包含)。此选项禁止自动断
+              字，即单词包含连字符时才会被断开。
+
+              如果您编写手册页时只是不希望 nnrrooffff  在某个位
+              置不恰当地断字，不要使用此选项，而应查阅
+              nnrrooffff 文档中的相关方法；例如，您可以在单词中
+              插入“\%”来指示该位置可以断字，或在单词开头插
+              入“\%”来阻止对它断字。
+
+       ----nnoo--jjuussttiiffiiccaattiioonn, ----nnjj
+              通常，nnrrooffff 会自动两端对齐文本。此选项禁止两
+              端对齐，只对齐左边，形成所谓的
+              “ragged-right”(右边不齐)的文本。
+
+              如果您编写手册页时只是不希望 nnrrooffff  对齐某些
+              段落，不要使用此选项，而应查阅  nnrrooffff 文档中
+              的相关方法；例如，您可以使用
+              “.na”、“.nf”、“.fi”和“.ad”请求来临时禁止对齐
+              和填充。
+
+       --pp _字_符_串, ----pprreepprroocceessssoorr==_字_符_串
+              指定 nnrrooffff 或 ttrrooffff/ggrrooffff 之前运行的预处理器
+              序列。系统中可能未安装所有的预处理器。一些预
+              处理器及其代号如下：eeqqnn (ee), ggrraapp  (gg),  ppiicc
+              (pp),  ttbbll (tt), vvggrriinndd (vv), rreeffeerr (rr)。此选项
+              覆盖 $MMAANNRROOFFFFSSEEQQ 环境变量。zzssooeelliimm  总是作为
+              第一个预处理器运行。
+
+       --tt, ----ttrrooffff
+              使用  _%_t_r_o_f_f 来格式化手册页到 stdout。此选项
+              不要求和 --HH、--TT 或 --ZZ 一起使用。
+
+       --TT[_设_备], ----ttrrooffff--ddeevviiccee[=_设_备]
+              此选项用于更改 ggrrooffff (也可能是 ttrrooffff) 的输出
+              以适合某个非默认设备。此选项隐含了
+              --tt。(Groff-1.17              提供的)例子包括
+              ddvvii、llaattiinn11、ppss、uuttff88、XX7755 和 XX110000。
+
+       --HH[_浏_览_器], ----hhttmmll[=_浏_览_器]
+              此选项使  ggrrooffff 生成 HTML 输出并在浏览器中显
+              示输出结果。浏览器选择取决于可选的   _b_r_o_w_s_e_r
+              参数(若提供)、$BBRROOWWSSEERR  环境变量，或编译时指
+              定的默认值(或环境变量未设置，默认值通常为
+              llyynnxx)。此选项隐含了  --tt，并只和 GGNNUU ttrrooffff 一
+              起使用。
+
+       --XX[_d_p_i], ----ggxxddiittvviieeww[=_d_p_i]
+              此选项使用 ggxxddiittvviieeww  程序在一个图形窗口中显
+              示   ggrrooffff  的输出结果。_d_p_i  (点/英寸)可以是
+              75、75-12、100 或 100-12，默认为 75；-12  形
+              式使用  12  点的基础字号。此选项隐含了带相应
+              X75、X75-12、X100 或 X100-12  参数的  --TT  选
+              项。
+
+       --ZZ, ----ddiittrrooffff
+              ggrrooffff  会运行 ttrrooffff 然后使用合适的后处理器产
+              生适合所选设备的输出。如果     _%_t_r_o_f_f     为
+              ggrrooffff，此选项会传递给 ggrrooffff 并禁止使用后处理
+              器。此选项隐含了 --tt 选项。
+
+   获获取取帮帮助助
+       --??, ----hheellpp
+              打印帮助消息并退出。
+
+       ----uussaaggee
+              打印简短的帮助消息并退出。
+
+       --VV, ----vveerrssiioonn
+              显示版本信息。
+
+退退出出状状态态
+       00      程序成功执行。
+
+       11      用法、语法或配置文件出错。
+
+       22      操作出错。
+
+       33      子进程返回了非零的退出状态码。
+
+       1166     至少有一个页面/文件/关键词不存在或不匹配。
+
+环环境境
+       MMAANNPPAATTHH
+              如果设置了  $MMAANNPPAATTHH，它的值会用作搜索手册页
+              的路径。
+
+       MMAANNRROOFFFFOOPPTT
+              Every time mmaann invokes the formatter (nnrrooffff,
+              ttrrooffff, or ggrrooffff), it adds  the  contents  of
+              $MMAANNRROOFFFFOOPPTT to the formatter's command line.
+
+       MMAANNRROOFFFFSSEEQQ
+              如果设置了 $MMAANNRROOFFFFSSEEQQ，它的值会用于确定每个
+              手册页经过的预处理程序的集合。默认的预处理器
+              列表因系统而异。
+
+       MMAANNSSEECCTT
+              如果设置了 $MMAANNSSEECCTT，它的值(以冒号分隔的章节
+              列表)会用于确定搜索哪些章节及搜索顺序。默认
+              值为“1  n l 8 3 2 3posix 3pm 3perl 3am 5 4 9
+              6   7”，除非被   _/_e_t_c_/_m_a_n_p_a_t_h_._c_o_n_f_i_g    中的
+              SSEECCTTIIOONN 指令覆盖。
+
+       MMAANNPPAAGGEERR, PPAAGGEERR
+              如果设置了  $MMAANNPPAAGGEERR  或  $PPAAGGEERR  (优先使用
+              $MMAANNPPAAGGEERR)，它的值会用作显示手册页的程序的名
+              称。默认使用  ppaaggeerr，如果无法找到 ppaaggeerr 或它
+              不是可执行文件的话则会回退到使用 ccaatt。
+
+              值可以是简单的命令名或带参数的命令，并可以使
+              用  shell 引用(反斜杠、单引号或双引号)。不能
+              使用管道连接多个命令；如果您需要，请使用封装
+              器脚本，它能够以参数形式或从标准输入获得要显
+              示的文件。
+
+       MMAANNLLEESSSS
+              如果设置了 $MMAANNLLEESSSS，它的值将用作 lleessss  分页
+              程序的默认提示字符串，如同作为 --rr 选项的参数
+              传递一样(因此出现的任何 $$MMAANN__PPNN 会以同样的方
+              式展开)。例如，如果您想将提示字符串无条件地
+              设置为“my prompt string”，请将 $MMAANNLLEESSSS 设置
+              为 ‘--PPssmmyy pprroommpptt ssttrriinngg’。使用 --rr 选项会覆盖
+              此环境变量。
+
+       BBRROOWWSSEERR
+              如果设置了 $BBRROOWWSSEERR，它的值(冒号分隔的命令列
+              表)中的每一个会轮流用于尝试为  mmaann ----hhttmmll 启
+              动一个网络浏览器。每个命令中，_%_s  会替换成包
+              含  ggrrooffff HTML 输出的文件名，_%_% 会替换成一个
+              百分号(%)，_%_c 会替换成冒号(:)。
+
+       SSYYSSTTEEMM 如果设置了 $SSYYSSTTEEMM  环境变量，其效果将与  --mm
+              选项的参数相同。
+
+       MMAANNOOPPTT 如果设置了  $MMAANNOOPPTT，它会先于 mmaann 的命令行并
+              假设为类似的格式来解析。由于所有其他的   mmaann
+              特定环境变量可以表达为命令行选项而可以包被含
+              进  $MMAANNOOPPTT，因此   这些环境变量可能废弃。注
+              意，所有应当解释为命令行选项参数一部分的空格
+              必须被转义。
+
+       MMAANNWWIIDDTTHH
+              If $MMAANNWWIIDDTTHH is set, its value  is  used  as
+              the  line  length  for  which  manual  pages
+              should be formatted.   If  it  is  not  set,
+              manual  pages  will be formatted with a line
+              length appropriate to the  current  terminal
+              (using  the  value of $CCOOLLUUMMNNSS, and iiooccttll(2)
+              if  available,  or  falling   back   to   80
+              characters  if  neither  is available).  Cat
+              pages will only be saved  when  the  default
+              formatting  can  be  used,  that is when the
+              terminal line length is between  66  and  80
+              characters.
+
+       MMAANN__KKEEEEPP__FFOORRMMAATTTTIINNGG
+              通常，当输出不定向到终端时(如定向到文件或管
+              道)，格式化字符会被忽略，以便不使用特殊工具
+              就能阅读结果。但如果 $MMAANN__KKEEEEPP__FFOORRMMAATTTTIINNGG 设
+              置成了任何非空的值，这些格式化字符将保存。这
+              对于可以解释格式化字符的 mmaann 封装程序有用。
+
+       MMAANN__KKEEEEPP__SSTTDDEERRRR
+              通常，当输出定向到终端时(一般是分页程序)，产
+              生手册格式化版本的命令造成的任何错误输出都会
+              被忽略，以免干扰分页程序显示。ggrrooffff 这样的程
+              度经常产生较小的有关排版显示的错误消息(如未
+              对齐)。这些消息很难看，并且一般与手册页一起
+              显示时会产生干扰。不过，有些用户就是想看到它
+              们，好吧，如果 $MMAANN__KKEEEEPP__SSTTDDEERRRR 设成了非空的
+              值，这些错误输出会照常显示。
+
+       LLAANNGG, LLCC__MMEESSSSAAGGEESS
+              取决于系统和实现，程序会查询   $LLAANNGG   和/或
+              $LLCC__MMEESSSSAAGGEESS  获知当前的消息区域语言。mmaann 会
+              以该区域语言显示消息(若可用)。参阅
+              sseettllooccaallee(3) 了解准确的详情。
+
+文文件件
+       _/_e_t_c_/_m_a_n_p_a_t_h_._c_o_n_f_i_g
+              man-db 配置文件。
+
+       _/_u_s_r_/_s_h_a_r_e_/_m_a_n
+              全局手册页层次结构。
+
+亦亦见见
+       aapprrooppooss(1),    ggrrooffff(1),    lleessss(1),    mmaannppaatthh(1),
+       nnrrooffff(1),    ttrrooffff(1),    wwhhaattiiss(1),    zzssooeelliimm(1),
+       mmaannppaatthh(5), mmaann(7), ccaattmmaann(8), mmaannddbb(8)
+
+       Documentation for some packages may be available in
+       other formats, such as iinnffoo(1)  or HTML.
+
+历历史史
+       1990,    1991    –    原作者    John    W.    Eaton
+       (jwe@che.utexas.edu)。
+
+       1992年12月23日: Rik Faith (faith@cs.unc.edu) 应用了
+       Willem Kasdorp (wkasdo@nikhefk.nikef.nl) 提供的 bug
+       补丁。
+
+       30th   April  1994  –  23rd  February  2000:  Wilf.
+       (G.Wilford@ee.surrey.ac.uk) has been developing and
+       maintaining  this  package  with  the help of a few
+       dedicated people.
+
+       1996年10月30日 –  2001年3月30日:  Fabrizio  Polacco
+       <fpolacco@debian.org>  为 Debian 项目维护并增强了这
+       个包，过程中得到整个社区的帮助。
+
+       2001年3月31日     –     今天:     Colin      Watson
+       <cjwatson@debian.org> 开发和维护着 man-db。
+
+2.9.1                   2020-02-25                  MAN(1)
