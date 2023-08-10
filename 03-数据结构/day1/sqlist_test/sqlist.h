@@ -22,11 +22,23 @@ void sqlistShow(sqlist_t *sqlist);
 
 int sqlistDeletePos(sqlist_t *sqlist, int pos);
 
-int sqlistResachPos(sqlist_t *sqlist , data_t data);
+int sqlistDeleteData(sqlist_t *sqlist, data_t data);
+
+int sqlistResachData(sqlist_t *sqlist , data_t data);
+
+int sqlistResachPos(sqlist_t *sqlist, int pos);
 
 int sqlistUpdateData(sqlist_t *sqlist, data_t olddata, data_t newdata);
 
+int sqlistUpdatePos(sqlist_t *sqlist,int pos,data_t data);
+
 int sqlistClrar(sqlist_t *sqlist);
 
-int sqlistDestroy(sqlist_t *sqlist);
+int sqlistSort(sqlist_t *sqlist);
+
+int sqlistDestroy(sqlist_t **sqlist);
+
+
+
+
 #endif

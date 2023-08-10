@@ -87,10 +87,6 @@ int sqlistDeletePos(sqlist_t *sqlist, int pos)
 	if(NULL==sqlist){
 		printf("表不存在\n");
 		return -1;
-	}
-	if(sqlistIsFull(sqlist)){
-		printf("sqlist is full...\n");
-		return -1;
 	}	
 	int len = sqlistGetLength(sqlist);
 	if(pos < 0 || pos > len-1){
@@ -106,16 +102,44 @@ int sqlistDeletePos(sqlist_t *sqlist, int pos)
 
 	
 }
-int sqlistResachPos(sqlist_t *sqlist , data_t data)
+
+int sqlistDeleteData(sqlist_t *sqlist, data_t data)
 {
 	if(NULL==sqlist){
 		printf("表不存在\n");
 		return -1;
 	}
-	if(sqlistIsFull(sqlist)){
-		printf("sqlist is full...\n");
+	
+	int i = 0,resu = 1;
+	for(;i<=sqlist->index;i++){
+		if(sqlist->data[i] == data){
+			resu = 0;
+			break;
+		}
+	}
+	if (resu){
+		
+		printf("未找到该元素\n");
 		return -1;
-	}	
+	}
+	else{
+		for(;i<=sqlist->index-1;i++){
+		sqlist->data[i] = sqlist->data[i+1];
+	}
+	sqlist->index--;
+
+		return 0;
+	}
+}
+
+
+int sqlistResachData(sqlist_t *sqlist , data_t data)
+{
+	if(NULL==sqlist){
+		printf("表不存在\n");
+		return -1;
+	}
+	
 	int i = 0,resu = 1;
 	for(;i<sqlist->index;i++){
 		if(sqlist->data[i] == data){
@@ -133,16 +157,31 @@ int sqlistResachPos(sqlist_t *sqlist , data_t data)
 	}
 }
 
+int sqlistResachPos(sqlist_t *sqlist, int pos)
+{
+	if(NULL==sqlist){
+		printf("表不存在\n");
+		return -1;
+	}	
+	int len = sqlistGetLength(sqlist);
+	if(pos < 0 || pos > len-1){
+		printf("  pos is    error       ");
+		return -1;
+	}
+	else{
+		printf("%d\n",sqlist->data[pos]);
+		return 0;
+	}
+
+}
+
 int sqlistUpdateData(sqlist_t *sqlist, data_t olddata, data_t newdata)
 {
 	if(NULL==sqlist){
 		printf("表不存在\n");
 		return -1;
 	}
-	if(sqlistIsFull(sqlist)){
-		printf("sqlist is full...\n");
-		return -1;
-	}	
+	
 	int i = 0,resu = 1;
 	for(;i<sqlist->index;i++){
 		if(sqlist->data[i] == olddata){
@@ -157,6 +196,25 @@ int sqlistUpdateData(sqlist_t *sqlist, data_t olddata, data_t newdata)
 	else{
 		return 0;
 	}
+}
+
+int sqlistUpdatePos(sqlist_t *sqlist,int pos,data_t data)
+{
+	if(NULL==sqlist){
+		printf("表不存在\n");
+		return -1;
+	}	
+	int len = sqlistGetLength(sqlist);
+	if(pos < 0 || pos > len-1){
+		printf("  pos is    error       ");
+		return -1;
+	}
+	else{
+		sqlist->data[pos] = data;
+		return 0;
+	}
+
+
 }
 
 int sqlistClrar(sqlist_t *sqlist)
@@ -174,13 +232,33 @@ int sqlistClrar(sqlist_t *sqlist)
 	return 0;
 }
 
-int sqlistDestroy(sqlist_t *sqlist)
+int sqlistSort(sqlist_t *sqlist)
 {
 	if(NULL==sqlist){
 		printf("表不存在\n");
 		return -1;
 	}
-	free(sqlist);
-	sqlist = NULL;
+	int i,j,len=sqlistGetLength(sqlist);
+	for(i=0;i<len-1;i++){
+		for(j=0;j<len-1-i;j++){
+			if(sqlist->data[j]>sqlist->data[j+1]){
+				int t = sqlist->data[j];
+				sqlist->data[j] = sqlist->data[j+1];
+				sqlist->data[j+1] = t;
+			}
+		}
+	}
+	return 0;
+
+}
+
+int sqlistDestroy(sqlist_t **sqlist)
+{
+	if(NULL==sqlist){
+		printf("表不存在\n");
+		return -1;
+	}
+	free(*sqlist);
+	*sqlist = NULL;
 	return 0;	
 }

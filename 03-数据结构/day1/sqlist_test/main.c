@@ -43,10 +43,14 @@ int main(int argc, const char *argv[])
 		printf("1. 查看顺序表\n");
 		printf("2. 按位置插入\n");
 		printf("3. 按位置删除\n");
+		printf("31.按数据删除\n");
 		printf("4. 按数据查找\n");
-		printf("5. 更新数据\n");
+		printf("41.按位置查找\n");
+		printf("5. 按数据更新数据\n");
+		printf("51.按位置更新数据\n");
 		printf("6. 清空数据\n");
 		printf("7. 查看表长\n");
+		printf("8. 排序\n");
 		printf("0. 销毁表并退出");
 		printf("\n---------------------------- \n");
 		printf("选择你要进行的操作并回车\n-->: ");
@@ -68,15 +72,32 @@ int main(int argc, const char *argv[])
 			if(!sqlistDeletePos(sqlist,pos))
 			printf("删除成功\n");
 			break;
+		case 31:
+			printf("输入你想删除的数: ");
+			scanf("%d",&data);
+			if(!sqlistDeleteData(sqlist,data))
+			printf("删除成功\n");
+			break;
 		case 4:
 			printf("输入你想查找的数: ");
 			scanf("%d",&data);
-			sqlistResachPos(sqlist,data);
+			sqlistResachData(sqlist,data);
+			break;
+		case 41:
+			printf("输入你想查找数据的位置: ");
+			scanf("%d",&pos);
+			sqlistResachPos(sqlist,pos);
 			break;
 		case 5:
 			printf("输入你想更改的数和想改为: ");
 			scanf("%d%d",&olddata,&data);
 			if(!sqlistUpdateData(sqlist, olddata, data))
+			printf("更改成功\n");
+			break;
+		case 51:
+			printf("输入你想更改的位置和想改为: ");
+			scanf("%d%d",&pos,&data);
+			if(!sqlistUpdatePos(sqlist,pos, data))
 			printf("更改成功\n");
 			break;
 		case 6:
@@ -86,8 +107,14 @@ int main(int argc, const char *argv[])
 		case 7:
 			printf("lenth = %d\n",sqlistGetLength(sqlist));
 			break;
+		case 8:
+			if(!sqlistSort(sqlist)){
+			printf("排序成功\n");
+			sqlistShow(sqlist);
+			}
+			break;
 		case 0:
-			if(!sqlistDestroy(sqlist))
+			if(!sqlistDestroy(&sqlist))
 			printf("销毁成功并退出\n");
 			break;
 		default:
