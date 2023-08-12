@@ -1,11 +1,11 @@
 #ifndef _LINK_H
 #define _LINK_H
 
-#define SIZE 100
 typedef int data_t;
 typedef struct node{
 	data_t data;
 	struct node *next;
+	struct node *prior;
 }link_t;
 
 link_t *linkCreate();
@@ -38,6 +38,7 @@ int linkSort(link_t *head);
 
 int linkDestroy(link_t **link);
 
-void Joseph(int n, int k, int m);
+
+
 
 #endif

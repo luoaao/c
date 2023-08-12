@@ -12,6 +12,8 @@ link_t *linkCreate()
 	}
 	head->data = -1;
 	head->next = NULL;
+	head->prior  = NULL;
+	return head;
 }
 
 int linkIsEmpty(link_t *head)
@@ -41,19 +43,27 @@ int linkInsertPos(link_t *head, data_t data, int pos)
 		return -1;
 	}
 	int len = linkGetLength(head);
-	if(pos<0 || pos > len){
+	if(pos<0 || pos >len){
 		printf("pos err...\n");
 		return -1;
 	}
-	link_t *q  = (link_t *)malloc(sizeof(link_t));
-	q->data = data;
 	link_t *p = head;
-	int i = 0;
+	int i =0;
 	for(;i<pos;i++){
-		p = p->next;
+		p= p->next;
 	}
-	q->next = p->next;
-	p->next = q;
+	link_t *new = (link_t *)malloc(sizeof(link_t));
+	new->data = data;
+	if(p->next == NULL){
+		new->next = p->next;
+		p->next = new;
+		new->prior = p;
+	}else{
+		new->next = p->next;
+		p->next->prior = new;
+		p->next = new;
+		new->prior = p;
+	}
 	return 0;
 
 }
@@ -64,12 +74,18 @@ void linkShow(link_t *head)
 		return;
 	}
 	link_t *p = head->next;
+	link_t *q = head->next;
 	while(p != NULL){
 		printf("%d ",p->data);
+		q=p;
 		p = p->next;
 	}
-	puts("");
-	
+	puts("shunxu   ....");
+	// while(q!=head){
+	// 	printf("%d ",q->data);
+	// 	q = q->prior;
+	// }
+	// puts("nixu   ....");
 	
 }
 
@@ -83,14 +99,22 @@ int linkDeletePos(link_t *head, int pos)
 		printf("pos err...\n");
 		return -1;
 	}
-	link_t *p = head;
+	link_t *p = head->next;
 	int i = 0;
 	for(;i<pos;i++){
 		p = p->next;
 	}
-	link_t *q = p->next;
-	p->next = q->next;
-	free(q);
+
+	if(p->next == NULL){
+		p->prior->next =p->next;
+		free(p);
+	}else{
+		p->prior->next = p->next;
+		p->next->prior = p->prior;
+		free(p);
+	}
+	return 0;
+	
 }
 
 int linkDeleteData(link_t *head, data_t data)
@@ -242,55 +266,6 @@ int linkSort(link_t *head){
 
 	}
 	return 0;
-}
-
-int linkDestroy(link_t **head)
-{
-	linkClear(*head);
-	free(*head);
-	*head = NULL;
-	
-	return 0;
-
-}
-void Joseph(int n, int k, int m)
-{
-	link_t *head = NULL;
-	link_t *r = NULL;
-	int i =0;
-	for(i=1; i<=n;i++){
-		link_t *p = (link_t *)malloc(sizeof(link_t));
-		if(head == NULL){
-			head = p;
-			r = head;
-		}else{
-			r->next = p;
-			r =r->next;
-		}
-	}
-	r->next = head;
-	r = head;
-	// while(1){
-	// 	getchar();
-	// 	printf("%d\n",r->data);
-	// 	r= r->next;
-	// }
-
-	for(i=0; i<k; i++){
-		r = r->next;
-	}
-	while(r->next != r){
-		for(i=0;i<m-2;i++){
-			r = r->next;
-		}
-		link_t *q = r->next;
-		printf("%d\n",q->data);
-		r->next = q->next;
-		free(q);
-		r = r->next;
-	}
-	printf(" \n live %d\n",r->data);
-	
 }
 
 

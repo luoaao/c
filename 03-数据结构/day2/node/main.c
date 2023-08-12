@@ -53,6 +53,8 @@ int main(int argc, const char *argv[])
 
 	linkClear(head);
 	linkDestroy(&head);
+
+	Joseph(8,3,4);
 	printf("empty: %d\n",linkIsEmpty(head));
 	printf("len: %d\n",linkGetLength(head));
 
