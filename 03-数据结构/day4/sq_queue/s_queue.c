@@ -43,7 +43,6 @@ int squeueIsFull(sq_t *queue)
 	if(queue == NULL){
 		return -1;
 	}
-    //规定差一个元素存满为满；
 	return (queue->rear + 1) % SIZE == queue->front;
 }
 
